@@ -7,13 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx-swt.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.web.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.media.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="/home/kl3pt0/CSCI323/Goose-in-the-Garden/lib/jfxrt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
