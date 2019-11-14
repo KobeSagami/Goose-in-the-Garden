@@ -76,7 +76,7 @@ public class Driver extends Application
         
         ImageView runningGoose = new ImageView();
         runningGoose.setImage(spriteMap);
-        runningGoose.setViewport(new Rectangle2D(0, 70, 40, 30));
+        runningGoose.setViewport(new Rectangle2D(8, 65, 34, 25));
         runningGoose.setScaleX(1.25);
         runningGoose.setScaleY(1.25);
         runningGoose.relocate(240, 250);
@@ -91,10 +91,10 @@ public class Driver extends Application
         
         Animation runningAnimation = new SpriteAnimation(
                 runningGoose,
-                Duration.millis(2000),
+                Duration.millis(5000),
                 4, 4,
-                0, 65,
-                40, 25
+                8, 65,
+                34, 25
         );
         
         walkingAnimation.setCycleCount(Animation.INDEFINITE);
@@ -121,7 +121,7 @@ public class Driver extends Application
         playerEmailText = new Text();
         playerEmailText.relocate(5, 35);
         
-        myPane.getChildren().addAll(walkingGoose, loadingText);
+        myPane.getChildren().addAll(runningGoose, loadingText);
         Group myGroup = new Group(myPane);
         myScene = new Scene(myGroup, 500, 500);
         myScene.setFill(Color.GRAY);
