@@ -43,23 +43,29 @@ public class Player extends SpriteBase {
         // ------------------------------------
 
         // vertical direction
-        if( input.isMoveUp()) {
-            dy = -speed;
-        } else if( input.isMoveDown()) {
-            dy = speed;
-        } else {
-          //  dy = 0d;
-        }
+
+            if (input.isMoveUp())
+            {
+                dx = 0;
+                dy = -speed;
+            }
+            else if (input.isMoveDown())
+            {
+                dx = 0;
+                dy = speed;
+            }
 
         // horizontal direction
-        if( input.isMoveLeft()) {
-            dx = -speed;
-        } else if( input.isMoveRight()) {
-            dx = speed;
-        } else {
-         //   dx = 0d;
-        }
-
+            if (input.isMoveLeft())
+            {
+                dy = 0;
+                dx = -speed;
+            }
+            else if (input.isMoveRight())
+            {
+                dy = 0;
+                dx = speed;
+            }
     }
 
     @Override
