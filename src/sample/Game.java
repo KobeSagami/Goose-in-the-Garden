@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -39,6 +40,9 @@ public class Game extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Image background = new Image("sample/Map.jpg");
+        ImageView backgroundView = new ImageView();
+        backgroundView.setImage(background);
 
         Group root = new Group();
 
@@ -46,14 +50,15 @@ public class Game extends Application {
         playfieldLayer = new Pane();
         scoreLayer = new Pane();
 
-        root.getChildren().add( playfieldLayer);
-        root.getChildren().add( scoreLayer);
+        root.getChildren().add(backgroundView);
+        root.getChildren().add(playfieldLayer);
+        root.getChildren().add(scoreLayer);
 
         scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 
 
 
-        primaryStage.setScene( scene);
+        primaryStage.setScene(scene);
         primaryStage.show();
 
         loadGame();

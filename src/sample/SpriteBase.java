@@ -1,13 +1,14 @@
 package sample;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public abstract class SpriteBase {
 
-    Image image;
-    ImageView imageView;
+    Image spriteMap;
+    ImageView spriteAnimation;
 
     Pane layer;
 
@@ -32,15 +33,15 @@ public abstract class SpriteBase {
     public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy) {
 
         this.layer = layer;
-        this.image = image;
+        this.spriteMap = image;
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
 
-        this.imageView = new ImageView(image);
-        this.imageView.relocate(x, y);
-        this.imageView.setRotate(r);
+        this.spriteAnimation = new ImageView(image);
+        this.spriteAnimation.relocate(x, y);
+        this.spriteAnimation.setRotate(r);
 
         this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
         this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
@@ -49,12 +50,13 @@ public abstract class SpriteBase {
 
     }
 
+
     public void addToLayer() {
-        this.layer.getChildren().add(this.imageView);
+        this.layer.getChildren().add(this.spriteAnimation);
     }
 
     public void removeFromLayer() {
-        this.layer.getChildren().remove(this.imageView);
+        this.layer.getChildren().remove(this.spriteAnimation);
     }
 
     public Pane getLayer() {
@@ -123,12 +125,12 @@ public abstract class SpriteBase {
     }
 
     public ImageView getView() {
-        return imageView;
+        return spriteAnimation;
     }
 
     public void updateUI() {
 
-        imageView.relocate(x, y);
+        spriteAnimation.relocate(x, y);
 
 
     }

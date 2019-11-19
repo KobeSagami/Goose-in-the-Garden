@@ -27,11 +27,12 @@ public class Player extends SpriteBase {
 
     private void init() {
 
-        // calculate movement bounds of the player
-        playerMinX = 0 ;
-        playerMaxX = Settings.SCENE_WIDTH - image.getWidth() ;
-        playerMinY = 0 ;
-        playerMaxY = Settings.SCENE_HEIGHT -image.getHeight();
+        // calculate movement bounds of the player ship
+        // allow half of the ship to be outside of the screen
+        playerMinX = 0;
+        playerMaxX = Settings.SCENE_WIDTH - spriteMap.getWidth();
+        playerMinY = 0;
+        playerMaxY = Settings.SCENE_HEIGHT -spriteMap.getHeight();
 
     }
 
@@ -43,28 +44,26 @@ public class Player extends SpriteBase {
 
         // vertical direction
 
-            if (input.isMoveUp())
-            {
-                dx = 0;
-                dy = -speed;
-            }
-            else if (input.isMoveDown())
-            {
-                dx = 0;
-                dy = speed;
-            }
+        if (input.isMoveUp()) {
+            spriteAnimation.setImage(new Image( getClass().getResource("player.png").toExternalForm()));
+            dx = 0;
+            dy = -speed;
+        } else if (input.isMoveDown()) {
+            spriteAnimation.setImage(new Image( getClass().getResource("Images/playerDown.png").toExternalForm()));
+            dx = 0;
+            dy = speed;
+        }
 
         // horizontal direction
-            if (input.isMoveLeft())
-            {
-                dy = 0;
-                dx = -speed;
-            }
-            else if (input.isMoveRight())
-            {
-                dy = 0;
-                dx = speed;
-            }
+        if (input.isMoveLeft()) {
+            spriteAnimation.setImage(new Image( getClass().getResource("Images/playerLeft.png").toExternalForm()));
+            dy = 0;
+            dx = -speed;
+        } else if (input.isMoveRight()) {
+            spriteAnimation.setImage(new Image( getClass().getResource("Images/playerRight.png").toExternalForm()));
+            dy = 0;
+            dx = speed;
+        }
     }
 
     @Override
@@ -72,7 +71,7 @@ public class Player extends SpriteBase {
 
         super.move();
 
-        // ensure the player can't move outside of the screen
+        // ensure the ship can't move outside of the screen
         checkBounds();
 
 
