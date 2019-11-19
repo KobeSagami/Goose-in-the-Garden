@@ -1,14 +1,22 @@
 package sample;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.awt.image.BufferedImage;
+
 public abstract class SpriteBase {
 
-    Image spriteMap;
+    Image idleUp;
+    Image idleDown;
+    Image idleLeft;
+    Image moveLeft1;
+    Image moveLeft2;
+    Image idleRight;
     ImageView spriteAnimation;
+
+    int frame;
 
     Pane layer;
 
@@ -30,21 +38,34 @@ public abstract class SpriteBase {
 
     boolean canMove = true;
 
+    private static BufferedImage spriteSheet;
+    private static final int TILE_SIZE = 32;
+
     public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy) {
 
         this.layer = layer;
-        this.spriteMap = image;
+        idleUp = image;
+
+        idleDown = new Image(getClass().getResource("Images/idleDown.png").toExternalForm());
+
+        idleLeft = new Image(getClass().getResource("Images/idleLeft.png").toExternalForm());
+        moveLeft1 = new Image(getClass().getResource("Images/chickenLeft1.png").toExternalForm());
+        moveLeft2 = new Image(getClass().getResource("Images/chickenLeft2.png").toExternalForm());
+
+        idleRight = new Image(getClass().getResource("Images/idleRight.png").toExternalForm());
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
 
-        this.spriteAnimation = new ImageView(image);
+        this.spriteAnimation = new ImageView(idleUp);
         this.spriteAnimation.relocate(x, y);
         this.spriteAnimation.setRotate(r);
 
         this.w = image.getWidth(); // imageView.getBoundsInParent().getWidth();
         this.h = image.getHeight(); // imageView.getBoundsInParent().getHeight();
+
+        frame = 0;
 
         addToLayer();
 
@@ -116,12 +137,23 @@ public abstract class SpriteBase {
     }
 
     public void move() {
-
+        if (frame > 60)
+            frame = 0;
+        frame++;
         if (!canMove)
             return;
 
         x += dx;
         y += dy;
+
+        if (dx < 0) {
+            if (frame == 0)
+                spriteAnimation.setImage(idleLeft);
+            else if (frame == 30)
+                spriteAnimation.setImage(moveLeft1);
+            else if (frame == 60)
+                spriteAnimation.setImage(moveLeft2);
+        }
     }
 
     public ImageView getView() {
@@ -129,10 +161,7 @@ public abstract class SpriteBase {
     }
 
     public void updateUI() {
-
         spriteAnimation.relocate(x, y);
-
-
     }
 
     public double getWidth() {
@@ -153,11 +182,8 @@ public abstract class SpriteBase {
 
     // TODO: per-pixel-collision and map collisions
     public boolean collidesWith(SpriteBase otherSprite) {
-
         return (otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
-
     }
-
 
     /**
      * Set flag that the sprite can be removed from the UI.

@@ -64,7 +64,7 @@ public class Game extends Application {
         loadGame();
 
         createScoreLayer();
-        createPlayers();
+        createPlayer();
 
         AnimationTimer gameLoop = new AnimationTimer() {
 
@@ -128,7 +128,7 @@ public class Game extends Application {
 
 
     }
-    private void createPlayers() {
+    private void createPlayer() {
 
         // player input
         Input input = new Input( scene);

@@ -30,9 +30,9 @@ public class Player extends SpriteBase {
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
         playerMinX = 0;
-        playerMaxX = Settings.SCENE_WIDTH - spriteMap.getWidth();
+        playerMaxX = Settings.SCENE_WIDTH - idleUp.getWidth();
         playerMinY = 0;
-        playerMaxY = Settings.SCENE_HEIGHT -spriteMap.getHeight();
+        playerMaxY = Settings.SCENE_HEIGHT -idleUp.getHeight();
 
     }
 
@@ -45,22 +45,26 @@ public class Player extends SpriteBase {
         // vertical direction
 
         if (input.isMoveUp()) {
-            spriteAnimation.setImage(new Image( getClass().getResource("player.png").toExternalForm()));
+            spriteAnimation.setImage(idleUp);
+            frame = 0;
             dx = 0;
             dy = -speed;
         } else if (input.isMoveDown()) {
-            spriteAnimation.setImage(new Image( getClass().getResource("Images/playerDown.png").toExternalForm()));
+            spriteAnimation.setImage(idleDown);
+            frame = 0;
             dx = 0;
             dy = speed;
         }
 
         // horizontal direction
         if (input.isMoveLeft()) {
-            spriteAnimation.setImage(new Image( getClass().getResource("Images/playerLeft.png").toExternalForm()));
+            spriteAnimation.setImage(idleLeft);
+            frame = 0;
             dy = 0;
             dx = -speed;
         } else if (input.isMoveRight()) {
-            spriteAnimation.setImage(new Image( getClass().getResource("Images/playerRight.png").toExternalForm()));
+            spriteAnimation.setImage(idleRight);
+            frame = 0;
             dy = 0;
             dx = speed;
         }
