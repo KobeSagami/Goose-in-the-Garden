@@ -27,12 +27,11 @@ public class Player extends SpriteBase {
 
     private void init() {
 
-        // calculate movement bounds of the player ship
-        // allow half of the ship to be outside of the screen
-        playerMinX = 0 - image.getWidth() / 2.0;
-        playerMaxX = Settings.SCENE_WIDTH - image.getWidth() / 2.0;
-        playerMinY = 0 - image.getHeight() / 2.0;
-        playerMaxY = Settings.SCENE_HEIGHT -image.getHeight() / 2.0;
+        // calculate movement bounds of the player
+        playerMinX = 0 ;
+        playerMaxX = Settings.SCENE_WIDTH - image.getWidth() ;
+        playerMinY = 0 ;
+        playerMaxY = Settings.SCENE_HEIGHT -image.getHeight();
 
     }
 
@@ -73,7 +72,7 @@ public class Player extends SpriteBase {
 
         super.move();
 
-        // ensure the ship can't move outside of the screen
+        // ensure the player can't move outside of the screen
         checkBounds();
 
 

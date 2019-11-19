@@ -115,7 +115,7 @@ public abstract class SpriteBase {
 
     public void move() {
 
-        if( !canMove)
+        if (!canMove)
             return;
 
         x += dx;
@@ -149,13 +149,12 @@ public abstract class SpriteBase {
         return y + h * 0.5;
     }
 
-    // TODO: per-pixel-collision
-    public boolean collidesWith( SpriteBase otherSprite) {
+    // TODO: per-pixel-collision and map collisions
+    public boolean collidesWith(SpriteBase otherSprite) {
 
-        return ( otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
+        return (otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
 
     }
-
 
 
     /**
