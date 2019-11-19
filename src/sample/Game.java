@@ -138,7 +138,7 @@ public class Game extends Application {
         double y = Settings.SCENE_HEIGHT * 0.7;
 
         // create player
-        Player player = new Player(playfieldLayer, image, x, y, 0, 0, 0, 0, Settings.PLAYER_SHIP_HEALTH, 0, Settings.PLAYER_SHIP_SPEED, input);
+        Player player = new Player(playfieldLayer, image, x, y,  0, 0 , Settings.PLAYER_SPEED, input);
 
         // register player
         players.add( player);
@@ -163,7 +163,7 @@ public class Game extends Application {
         double y = -image.getHeight();
 
         // create a sprite
-        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0, 0, speed, 0, 1,1);
+        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed);
 
         // manage sprite
         enemies.add( enemy);

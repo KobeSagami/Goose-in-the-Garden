@@ -5,18 +5,18 @@ import javafx.scene.layout.Pane;
 
 public class Player extends SpriteBase {
 
-    double playerShipMinX;
-    double playerShipMaxX;
-    double playerShipMinY;
-    double playerShipMaxY;
+    double playerMinX;
+    double playerMaxX;
+    double playerMinY;
+    double playerMaxY;
 
     Input input;
 
     double speed;
 
-    public Player(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage, double speed, Input input) {
+    public Player(Pane layer, Image image, double x, double y, double dx, double dy, double speed, Input input) {
 
-        super(layer, image, x, y, r, dx, dy, dr, health, damage);
+        super(layer, image, x, y,  dx, dy);
 
         this.speed = speed;
         this.input = input;
@@ -29,10 +29,10 @@ public class Player extends SpriteBase {
 
         // calculate movement bounds of the player ship
         // allow half of the ship to be outside of the screen
-        playerShipMinX = 0 - image.getWidth() / 2.0;
-        playerShipMaxX = Settings.SCENE_WIDTH - image.getWidth() / 2.0;
-        playerShipMinY = 0 - image.getHeight() / 2.0;
-        playerShipMaxY = Settings.SCENE_HEIGHT -image.getHeight() / 2.0;
+        playerMinX = 0 - image.getWidth() / 2.0;
+        playerMaxX = Settings.SCENE_WIDTH - image.getWidth() / 2.0;
+        playerMinY = 0 - image.getHeight() / 2.0;
+        playerMaxY = Settings.SCENE_HEIGHT -image.getHeight() / 2.0;
 
     }
 
@@ -82,17 +82,17 @@ public class Player extends SpriteBase {
     private void checkBounds() {
 
         // vertical
-        if( Double.compare( y, playerShipMinY) < 0) {
-            y = playerShipMinY;
-        } else if( Double.compare(y, playerShipMaxY) > 0) {
-            y = playerShipMaxY;
+        if( Double.compare( y, playerMinY) < 0) {
+            y = playerMinY;
+        } else if( Double.compare(y, playerMaxY) > 0) {
+            y = playerMaxY;
         }
 
         // horizontal
-        if( Double.compare( x, playerShipMinX) < 0) {
-            x = playerShipMinX;
-        } else if( Double.compare(x, playerShipMaxX) > 0) {
-            x = playerShipMaxX;
+        if( Double.compare( x, playerMinX) < 0) {
+            x = playerMinX;
+        } else if( Double.compare(x, playerMaxX) > 0) {
+            x = playerMaxX;
         }
 
     }

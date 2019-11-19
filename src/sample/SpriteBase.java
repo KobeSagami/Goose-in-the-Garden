@@ -29,19 +29,14 @@ public abstract class SpriteBase {
 
     boolean canMove = true;
 
-    public SpriteBase(Pane layer, Image image, double x, double y, double r, double dx, double dy, double dr, double health, double damage) {
+    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy) {
 
         this.layer = layer;
         this.image = image;
         this.x = x;
         this.y = y;
-        this.r = r;
         this.dx = dx;
         this.dy = dy;
-        this.dr = dr;
-
-        this.health = health;
-        this.damage = damage;
 
         this.imageView = new ImageView(image);
         this.imageView.relocate(x, y);
@@ -110,30 +105,6 @@ public abstract class SpriteBase {
         this.dy = dy;
     }
 
-    public double getDr() {
-        return dr;
-    }
-
-    public void setDr(double dr) {
-        this.dr = dr;
-    }
-
-    public double getHealth() {
-        return health;
-    }
-
-    public double getDamage() {
-        return damage;
-    }
-
-    public void setDamage(double damage) {
-        this.damage = damage;
-    }
-
-    public void setHealth(double health) {
-        this.health = health;
-    }
-
     public boolean isRemovable() {
         return removable;
     }
@@ -149,12 +120,6 @@ public abstract class SpriteBase {
 
         x += dx;
         y += dy;
-        r += dr;
-
-    }
-
-    public boolean isAlive() {
-        return Double.compare(health, 0) > 0;
     }
 
     public ImageView getView() {
@@ -164,7 +129,7 @@ public abstract class SpriteBase {
     public void updateUI() {
 
         imageView.relocate(x, y);
-        imageView.setRotate(r);
+
 
     }
 
@@ -191,20 +156,7 @@ public abstract class SpriteBase {
 
     }
 
-    /**
-     * Reduce health by the amount of damage that the given sprite can inflict
-     * @param sprite
-     */
-    public void getDamagedBy( SpriteBase sprite) {
-        health -= sprite.getDamage();
-    }
 
-    /**
-     * Set health to 0
-     */
-    public void kill() {
-        setHealth( 0);
-    }
 
     /**
      * Set flag that the sprite can be removed from the UI.
