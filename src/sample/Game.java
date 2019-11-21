@@ -104,7 +104,7 @@ public class Game extends Application {
     }
 
     private void loadGame() {
-        playerImage = new Image( getClass().getResource("player.png").toExternalForm());
+        playerImage = new Image( getClass().getResource("Images/chickens/whiteChickenDown1.png").toExternalForm());
         enemyImage = new Image( getClass().getResource("enemy.png").toExternalForm());
     }
 

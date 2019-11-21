@@ -11,12 +11,21 @@ public abstract class SpriteBase {
     Image idleUp;
     Image idleDown;
     Image idleLeft;
+    Image idleRight;
     Image moveLeft1;
     Image moveLeft2;
-    Image idleRight;
+    Image moveRight1;
+    Image moveRight2;
+    Image moveDown1;
+    Image moveDown2;
+    Image moveUp1;
+    Image moveUp2;
+
     ImageView spriteAnimation;
 
     int frame;
+
+    String color;
 
     Pane layer;
 
@@ -38,21 +47,25 @@ public abstract class SpriteBase {
 
     boolean canMove = true;
 
-    private static BufferedImage spriteSheet;
-    private static final int TILE_SIZE = 32;
-
     public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy) {
 
         this.layer = layer;
-        idleUp = image;
+        this.color = "white";
 
-        idleDown = new Image(getClass().getResource("Images/idleDown.png").toExternalForm());
+        idleDown = new Image(getClass().getResource("Images/chickens/" + color + "ChickenDown2.png").toExternalForm());
+        idleLeft = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft2.png").toExternalForm());
+        idleRight = new Image(getClass().getResource("Images/chickens/" + color + "ChickenRight2.png").toExternalForm());
+        idleUp = new Image(getClass().getResource("Images/chickens/" + color + "ChickenUp2.png").toExternalForm());
 
-        idleLeft = new Image(getClass().getResource("Images/idleLeft.png").toExternalForm());
-        moveLeft1 = new Image(getClass().getResource("Images/chickenLeft1.png").toExternalForm());
-        moveLeft2 = new Image(getClass().getResource("Images/chickenLeft2.png").toExternalForm());
+        moveLeft1 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft1.png").toExternalForm());
+        moveLeft2 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft3.png").toExternalForm());
+        moveRight1 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenRight1.png").toExternalForm());
+        moveRight2 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenRight3.png").toExternalForm());
+        moveDown1 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenDown1.png").toExternalForm());
+        moveDown2 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenDown3.png").toExternalForm());
+        moveUp1 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenUp1.png").toExternalForm());
+        moveUp2 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenUp3.png").toExternalForm());
 
-        idleRight = new Image(getClass().getResource("Images/idleRight.png").toExternalForm());
         this.x = x;
         this.y = y;
         this.dx = dx;
@@ -137,22 +150,97 @@ public abstract class SpriteBase {
     }
 
     public void move() {
+        frame++;
         if (frame > 60)
             frame = 0;
-        frame++;
         if (!canMove)
             return;
 
         x += dx;
         y += dy;
 
-        if (dx < 0) {
-            if (frame == 0)
-                spriteAnimation.setImage(idleLeft);
-            else if (frame == 30)
-                spriteAnimation.setImage(moveLeft1);
-            else if (frame == 60)
-                spriteAnimation.setImage(moveLeft2);
+        if (dx < 0)
+        {
+            switch(frame)
+            {
+                case 0:
+                    spriteAnimation.setImage(idleLeft);
+                    break;
+                case 15:
+                    spriteAnimation.setImage(moveLeft1);
+                    break;
+                case 30:
+                    spriteAnimation.setImage(idleLeft);
+                    break;
+                case 45:
+                    spriteAnimation.setImage(moveLeft2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (dx > 0)
+        {
+            System.out.println(frame);
+            switch(frame)
+            {
+                case 0:
+                    spriteAnimation.setImage(idleRight);
+                    break;
+                case 15:
+                    spriteAnimation.setImage(moveRight1);
+                    break;
+                case 30:
+                    spriteAnimation.setImage(idleRight);
+                    break;
+                case 45:
+                    spriteAnimation.setImage(moveRight2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (dy > 0)
+        {
+            System.out.println(frame);
+            switch(frame)
+            {
+                case 0:
+                    spriteAnimation.setImage(idleDown);
+                    break;
+                case 15:
+                    spriteAnimation.setImage(moveDown1);
+                    break;
+                case 30:
+                    spriteAnimation.setImage(idleDown);
+                    break;
+                case 45:
+                    spriteAnimation.setImage(moveDown2);
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (dy < 0)
+        {
+            System.out.println(frame);
+            switch(frame)
+            {
+                case 0:
+                    spriteAnimation.setImage(idleUp);
+                    break;
+                case 15:
+                    spriteAnimation.setImage(moveUp1);
+                    break;
+                case 30:
+                    spriteAnimation.setImage(idleUp);
+                    break;
+                case 45:
+                    spriteAnimation.setImage(moveUp2);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

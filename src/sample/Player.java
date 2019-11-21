@@ -43,13 +43,14 @@ public class Player extends SpriteBase {
         // ------------------------------------
 
         // vertical direction
-
-        if (input.isMoveUp()) {
+        if (input.isMoveUp())
+        {
             spriteAnimation.setImage(idleUp);
             frame = 0;
             dx = 0;
             dy = -speed;
-        } else if (input.isMoveDown()) {
+        } else if (input.isMoveDown())
+        {
             spriteAnimation.setImage(idleDown);
             frame = 0;
             dx = 0;
@@ -75,14 +76,13 @@ public class Player extends SpriteBase {
 
         super.move();
 
-        // ensure the ship can't move outside of the screen
         checkBounds();
 
 
     }
 
-    private void checkBounds() {
-
+    private void checkBounds()
+    {
         // vertical
         if( Double.compare( y, playerMinY) < 0) {
             y = playerMinY;
