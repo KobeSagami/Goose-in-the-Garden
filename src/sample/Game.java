@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +28,8 @@ public class Game extends Application {
     Pane playfieldLayer;
     Pane scoreLayer;
 
+    String mapName = "Map1.csv";
+
     Image playerImage;
     Image enemyImage;
 
@@ -37,6 +40,9 @@ public class Game extends Application {
     boolean collision = false;
 
     Scene scene;
+
+    public Game() throws URISyntaxException {
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -139,11 +145,11 @@ public class Game extends Application {
         Image image = playerImage;
 
         // center horizontally, position at 70% vertically
-        double x = (Settings.SCENE_WIDTH - image.getWidth()) / 2.0;
-        double y = Settings.SCENE_HEIGHT * 0.7;
+        double x = 400;
+        double y = 350;
 
         // create player
-        Player player = new Player(playfieldLayer, image, x, y,  0, 0 , Settings.PLAYER_SPEED, input);
+        Player player = new Player(playfieldLayer, image, x, y,  0, 0 , Settings.PLAYER_SPEED, input,mapName);
 
         // register player
         players.add( player);
@@ -168,10 +174,10 @@ public class Game extends Application {
         double y = -image.getHeight();
 
         // create a sprite
-        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed);
+        //Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed,mapName);
 
         // manage sprite
-        enemies.add( enemy);
+       // enemies.add( enemy);
 
     }
 

@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 
 public abstract class SpriteBase {
 
@@ -42,12 +43,20 @@ public abstract class SpriteBase {
 
     boolean removable = false;
 
+    CheckMap mapLevel;
+
     double w;
     double h;
 
     boolean canMove = true;
 
-    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy) {
+    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy,String mapName) {
+
+        try {
+            mapLevel = new CheckMap(mapName);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         this.layer = layer;
         this.color = "white";
@@ -150,14 +159,14 @@ public abstract class SpriteBase {
     }
 
     public void move() {
-        frame++;
-        if (frame > 60)
-            frame = 0;
+        frame = ++frame % 60;
         if (!canMove)
             return;
 
-        x += dx;
-        y += dy;
+        double[] movement;
+        movement = mapLevel.movement(x,y,dx,dy);
+        x =movement[0];
+        y =movement[1];
 
         if (dx < 0)
         {
