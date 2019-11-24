@@ -173,13 +173,11 @@ public abstract class SpriteBase {
             switch(frame)
             {
                 case 0:
+                case 30:
                     spriteAnimation.setImage(idleLeft);
                     break;
                 case 15:
                     spriteAnimation.setImage(moveLeft1);
-                    break;
-                case 30:
-                    spriteAnimation.setImage(idleLeft);
                     break;
                 case 45:
                     spriteAnimation.setImage(moveLeft2);
@@ -194,13 +192,11 @@ public abstract class SpriteBase {
             switch(frame)
             {
                 case 0:
+                case 30:
                     spriteAnimation.setImage(idleRight);
                     break;
                 case 15:
                     spriteAnimation.setImage(moveRight1);
-                    break;
-                case 30:
-                    spriteAnimation.setImage(idleRight);
                     break;
                 case 45:
                     spriteAnimation.setImage(moveRight2);
@@ -215,13 +211,11 @@ public abstract class SpriteBase {
             switch(frame)
             {
                 case 0:
+                case 30:
                     spriteAnimation.setImage(idleDown);
                     break;
                 case 15:
                     spriteAnimation.setImage(moveDown1);
-                    break;
-                case 30:
-                    spriteAnimation.setImage(idleDown);
                     break;
                 case 45:
                     spriteAnimation.setImage(moveDown2);
@@ -236,13 +230,11 @@ public abstract class SpriteBase {
             switch(frame)
             {
                 case 0:
+                case 30:
                     spriteAnimation.setImage(idleUp);
                     break;
                 case 15:
                     spriteAnimation.setImage(moveUp1);
-                    break;
-                case 30:
-                    spriteAnimation.setImage(idleUp);
                     break;
                 case 45:
                     spriteAnimation.setImage(moveUp2);

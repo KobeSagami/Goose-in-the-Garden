@@ -56,25 +56,25 @@ public class CheckMap {
          return returnVal;
     }
 
-    public boolean canMoveLeft(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveLeft(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
 
         return mapBool[intX-1][intY];
     }
-    public boolean canMoveRight(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveRight(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
         return mapBool[intX+1][intY];
     }
-    public boolean canMoveUp(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveUp(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
         return mapBool[intX][intY-1];
     }
-    public boolean canMoveDown(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveDown(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
         return mapBool[intX][intY+1];
     }
 
