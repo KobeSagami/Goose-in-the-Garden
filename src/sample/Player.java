@@ -31,7 +31,7 @@ public class Player extends SpriteBase {
         // allow half of the ship to be outside of the screen
         playerMinX = 0;
         playerMaxX = Settings.SCENE_WIDTH - idleUp.getWidth();
-        playerMinY = 0;
+        playerMinY = 75;
         playerMaxY = Settings.SCENE_HEIGHT -idleUp.getHeight();
 
     }

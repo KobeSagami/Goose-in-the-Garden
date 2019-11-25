@@ -188,7 +188,6 @@ public abstract class SpriteBase {
         }
         if (dx > 0)
         {
-            System.out.println(frame);
             switch(frame)
             {
                 case 0:
@@ -207,7 +206,6 @@ public abstract class SpriteBase {
         }
         if (dy > 0)
         {
-            System.out.println(frame);
             switch(frame)
             {
                 case 0:
@@ -226,7 +224,6 @@ public abstract class SpriteBase {
         }
         if (dy < 0)
         {
-            System.out.println(frame);
             switch(frame)
             {
                 case 0:

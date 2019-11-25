@@ -42,11 +42,17 @@ public class CheckMap {
         Double moveX,moveY;
         moveX=intX*25.0;
         moveY=intY*25.0;
+        System.out.println(x+dx +" X int "+intX+"  "+y+dy +" Y int "+intY);
 
-
-        if (mapBool[intX][intY]){
-         moveX=+dx;
-         moveY=+dy;
+        if (dx>0 && mapBool[intX+1][intY]){
+            moveX=moveX+dx;
+        }else if (dx<0 && mapBool[intX][intY]){
+            moveX=moveX+dx;
+        }
+        if (dy>0 && mapBool[intX][intY+1]){
+            moveY=moveY+dy;
+        }else if (dy<0 &&  mapBool[intX][intY-1]){
+            moveY=moveY+dy;
         }
 
 
@@ -81,6 +87,5 @@ public class CheckMap {
     public static void main(String[] args) throws URISyntaxException {
     CheckMap myMap = new CheckMap("Map1.csv");
     }
-
 
 }
