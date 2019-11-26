@@ -12,20 +12,25 @@ public class CheckMap {
 
     public CheckMap(String filename) throws URISyntaxException {
 
-        mapBool = new boolean[32][34];
+        mapBool = new boolean[32][32];
 
         try (BufferedReader br = new BufferedReader(new FileReader(new File("src/sample/"+filename)))) {
 
             String strCurrentLine;
             Integer offset=0;
             while ((strCurrentLine = br.readLine()) != null) {
-                mapBool[0][offset] = false;
+
 
                 String[] arrayString = strCurrentLine.split(",");
-                for (int i = 1; i <= arrayString.length; i++) {
-                    mapBool[offset][i ] = Boolean.parseBoolean(arrayString[i-1]);
+                for (int i = 0; i < arrayString.length; i++) {
+                    if (Integer.parseInt(arrayString[i])==1){
+                        mapBool[i][offset ] = true;
+                    }else {
+                        mapBool[i][offset] = false;
+
+                    }System.out.print(mapBool[offset][i ]+"-");
                 }
-                mapBool[offset][33] = false;
+                System.out.println("");
                 offset++;
 
             }
@@ -37,17 +42,29 @@ public class CheckMap {
     }
 
     public double[] movement(double x, double y, double dx, double dy)  {
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+        int intX = (int)(x+dx)/25;
+        int intY = (int)(y+dy)/25;
         Double moveX,moveY;
-        moveX=intX*25.0;
-        moveY=intY*25.0;
+        moveX=x;
+        moveY=y;
+       System.out.println(mapBool[(intX)][intY]);
 
 
-        if (mapBool[intX][intY]){
-         moveX=+dx;
-         moveY=+dy;
+
+        if ( mapBool[intX+2][intY]){
+            moveX=moveX+dx;
+            moveY=moveY+dy;
         }
+//        else if (dx<0 &&mapBool[(int)intX/25][(int)intY/25]){
+//
+//            moveX=moveX+dx;
+//        }
+//
+//        if (dxy>0 && mapBool[(int)(intX/25)+1][(int)intY/25]){
+//            moveX=moveX+dx;
+//        }else if (dx<0 &&mapBool[(int)intX/25][(int)intY/25]){
+//            moveX=moveX+dx;
+//        }
 
 
         double[] returnVal =new double[2];
@@ -56,31 +73,30 @@ public class CheckMap {
          return returnVal;
     }
 
-    public boolean canMoveLeft(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveLeft(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
 
         return mapBool[intX-1][intY];
     }
-    public boolean canMoveRight(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveRight(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
         return mapBool[intX+1][intY];
     }
-    public boolean canMoveUp(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveUp(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
         return mapBool[intX][intY-1];
     }
-    public boolean canMoveDown(double x, double y, double dx, double dy){
-        Integer intX = (int)(x+dx)/25;
-        Integer intY = (int)(y+dy)/25;
+    public boolean canMoveDown(double x, double y){
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
         return mapBool[intX][intY+1];
     }
 
     public static void main(String[] args) throws URISyntaxException {
     CheckMap myMap = new CheckMap("Map1.csv");
     }
-
 
 }
