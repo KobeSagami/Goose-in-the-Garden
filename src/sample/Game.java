@@ -2,8 +2,10 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -24,6 +26,7 @@ public class Game extends Application {
 
     Random rnd = new Random();
 
+    Button startButton;
 
     Pane playfieldLayer;
     Pane scoreLayer;
@@ -41,31 +44,46 @@ public class Game extends Application {
 
     Scene scene;
 
+    Group root;
+
+    ImageView backgroundView;
+
     public Game() throws URISyntaxException {
     }
 
     @Override
     public void start(Stage primaryStage) {
         Image background = new Image("sample/Map.jpg");
-        ImageView backgroundView = new ImageView();
+        backgroundView = new ImageView();
         backgroundView.setImage(background);
 
-        Group root = new Group();
+        root = new Group();
 
         // create layers
         playfieldLayer = new Pane();
         scoreLayer = new Pane();
 
-        root.getChildren().add(backgroundView);
-        root.getChildren().add(playfieldLayer);
-        root.getChildren().add(scoreLayer);
+        startButton = new Button("Start Game");
+        startButton.relocate(350, 400);
+        startButton.setOnAction(this::startButtonClickEvent);
+
+        root.getChildren().add(startButton);
+
+
 
         scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 
-
-
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public void startButtonClickEvent(ActionEvent args)
+    {
+        startButton.setVisible(false);
+
+        root.getChildren().add(backgroundView);
+        root.getChildren().add(playfieldLayer);
+        root.getChildren().add(scoreLayer);
 
         loadGame();
 
@@ -106,7 +124,6 @@ public class Game extends Application {
 
         };
         gameLoop.start();
-
     }
 
     private void loadGame() {
@@ -174,10 +191,10 @@ public class Game extends Application {
         double y = -image.getHeight();
 
         // create a sprite
-        //Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed,mapName);
+        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed,mapName);
 
         // manage sprite
-       // enemies.add( enemy);
+        enemies.add( enemy);
 
     }
 
