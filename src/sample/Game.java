@@ -71,7 +71,7 @@ public class Game extends Application {
 
         createScoreLayer();
         createPlayer();
-
+        spawnEnemies( false);
         AnimationTimer gameLoop = new AnimationTimer() {
 
             @Override
@@ -81,12 +81,12 @@ public class Game extends Application {
                 players.forEach(sprite -> sprite.processInput());
 
                 // add random enemies
-                spawnEnemies( true);
+
 
                 // movement
                 players.forEach(sprite -> sprite.move());
+                enemies.get(0).AI(, true, true, true, players.get(0).getY(), players.get(0).getX());
                 enemies.forEach(sprite -> sprite.move());
-
                 // check collisions
                 checkCollisions();
 
@@ -170,14 +170,14 @@ public class Game extends Application {
 
         // x position range: enemy is always fully inside the screen, no part of it is outside
         // y position: right on top of the view, so that it becomes visible with the next game iteration
-        double x = rnd.nextDouble() * (Settings.SCENE_WIDTH - image.getWidth());
+        double x = 125;
         double y = -image.getHeight();
 
         // create a sprite
-        //Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed,mapName);
+        Enemy enemy = new Enemy( playfieldLayer, image, x, y +125, 0,  0 ,mapName);
 
         // manage sprite
-       // enemies.add( enemy);
+       enemies.add( enemy);
 
     }
 
