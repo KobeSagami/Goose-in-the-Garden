@@ -57,7 +57,6 @@ public class Input {
 
             // register key down
             keyboardBitSet.set(event.getCode().ordinal(), true);
-
         }
     };
 
@@ -70,7 +69,6 @@ public class Input {
 
             // register key up
             keyboardBitSet.set(event.getCode().ordinal(), false);
-
         }
     };
 
