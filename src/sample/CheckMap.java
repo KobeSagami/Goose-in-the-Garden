@@ -12,7 +12,7 @@ public class CheckMap {
 
     public CheckMap(String filename) throws URISyntaxException {
 
-        mapBool = new boolean[32][32];
+        mapBool = new boolean[32][34];
 
         try (BufferedReader br = new BufferedReader(new FileReader(new File("src/sample/"+filename)))) {
 
@@ -28,8 +28,11 @@ public class CheckMap {
                     }else {
                         mapBool[i][offset] = false;
 
-                    }System.out.print(mapBool[offset][i ]+"-");
+                    }
+                    System.out.print(mapBool[offset][i ]+"-");
                 }
+//                mapBool[offset][32]=false;
+//                mapBool[offset][33]=false;
                 System.out.println("");
                 offset++;
 
