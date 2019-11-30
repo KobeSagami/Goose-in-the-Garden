@@ -29,15 +29,10 @@ public class CheckMap {
                         mapBool[i][offset] = false;
 
                     }
-                    System.out.print(mapBool[offset][i ]+"-");
                 }
-//                mapBool[offset][32]=false;
-//                mapBool[offset][33]=false;
-                System.out.println("");
                 offset++;
-
             }
-            } catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
@@ -50,27 +45,22 @@ public class CheckMap {
         Double moveX,moveY;
         moveX=x;
         moveY=y;
-       System.out.println(mapBool[(intX)][intY]);
-
-
 
         if ( mapBool[intX][intY]){
             moveX=moveX+dx;
             moveY=moveY+dy;
         }
-//        else if (dx<0 &&mapBool[(int)intX/25][(int)intY/25]){
-//
-//            moveX=moveX+dx;
-//        }
-//
-//        if (dxy>0 && mapBool[(int)(intX/25)+1][(int)intY/25]){
-//            moveX=moveX+dx;
-//        }else if (dx<0 &&mapBool[(int)intX/25][(int)intY/25]){
-//            moveX=moveX+dx;
-//        }
+      //  System.out.println("X = "+intX+"    Y = "+intY);
 
+        if (intY>15 && intY<18){
+            if (intX==30 && dx>0){
+            moveX=5.0;
+            }else if (intX==0 && dx<0)
+            moveX=795.0;
+        }
 
         double[] returnVal =new double[2];
+
         returnVal[0]=moveX;
          returnVal[1]=moveY;
          return returnVal;
@@ -80,21 +70,37 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
+        if (intX==0){
+            return false;
+        }
+
         return mapBool[intX-1][intY];
     }
     public boolean canMoveRight(double x, double y){
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
+
+        if (intX==31){
+            return false;
+        }
         return mapBool[intX+1][intY];
     }
     public boolean canMoveUp(double x, double y){
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
+
+        if (intY==0){
+            return false;
+        }
         return mapBool[intX][intY-1];
     }
     public boolean canMoveDown(double x, double y){
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
+
+        if (intY==31){
+            return false;
+        }
         return mapBool[intX][intY+1];
     }
 
