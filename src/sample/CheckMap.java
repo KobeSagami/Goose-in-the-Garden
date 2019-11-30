@@ -54,7 +54,7 @@ public class CheckMap {
 
 
 
-        if ( mapBool[intX+2][intY]){
+        if ( mapBool[intX][intY]){
             moveX=moveX+dx;
             moveY=moveY+dy;
         }
