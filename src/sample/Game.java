@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -30,11 +28,6 @@ public class Game extends Application {
     Pane playfieldLayer;
     Pane scoreLayer;
 
-    Button startButton;
-
-    Group root;
-    ImageView backgroundView;
-
     String mapName = "Map1.csv";
 
     Image playerImage;
@@ -54,58 +47,60 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage) {
         Image background = new Image("sample/Map.jpg");
-        backgroundView = new ImageView();
+        ImageView backgroundView = new ImageView();
         backgroundView.setImage(background);
 
-        root = new Group();
+        Group root = new Group();
 
         // create layers
         playfieldLayer = new Pane();
         scoreLayer = new Pane();
 
-        startButton = new Button("Start Game");
-        startButton.relocate(350, 400);
-        startButton.setOnAction(this::startButtonClickEvent);
-
-        root.getChildren().add(startButton);
-
-        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public void startButtonClickEvent(ActionEvent args)
-    {
-        startButton.setVisible(false);
-
         root.getChildren().add(backgroundView);
         root.getChildren().add(playfieldLayer);
         root.getChildren().add(scoreLayer);
+
+        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+
+
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
         loadGame();
 
         createScoreLayer();
         createPlayer();
+        spawnEnemies(75, 75);
         AnimationTimer gameLoop = new AnimationTimer() {
+
             @Override
             public void handle(long now) {
+
                 // player input
                 players.forEach(sprite -> sprite.processInput());
+
                 // add random enemies
-                spawnEnemies( true);
+
+
                 // movement
                 players.forEach(sprite -> sprite.move());
+                enemies.forEach(sprite-> sprite.AI(players.get(0).getX(), players.get(0).getY()));
                 enemies.forEach(sprite -> sprite.move());
+
                 // check collisions
                 checkCollisions();
+
                 // update sprites in scene
                 players.forEach(sprite -> sprite.updateUI());
                 enemies.forEach(sprite -> sprite.updateUI());
+
                 // check if sprite can be removed
                 enemies.forEach(sprite -> sprite.checkRemovability());
+
                 // remove removables from list, layer, etc
                 removeSprites( enemies);
+
                 // update score, health, etc
                 updateScore();
             }
@@ -162,28 +157,18 @@ public class Game extends Application {
 
     }
 
-    private void spawnEnemies( boolean random) {
-
-        if( random && rnd.nextInt(Settings.ENEMY_SPAWN_RANDOMNESS) != 0) {
-            return;
-        }
+    private void spawnEnemies( int x, int y) {
 
         // image
         Image image = enemyImage;
 
         // random speed
-        double speed = rnd.nextDouble() * 1.0 + 2.0;
 
-        // x position range: enemy is always fully inside the screen, no part of it is outside
-        // y position: right on top of the view, so that it becomes visible with the next game iteration
-        double x = rnd.nextDouble() * (Settings.SCENE_WIDTH - image.getWidth());
-        double y = -image.getHeight();
 
-        // create a sprite
-       // Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  speed,mapName);
+        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 5,  0 ,mapName);
 
         // manage sprite
-        //enemies.add( enemy);
+        enemies.add( enemy);
 
     }
 

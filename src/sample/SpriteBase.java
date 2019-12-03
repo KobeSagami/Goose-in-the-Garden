@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.net.URISyntaxException;
 
 public abstract class SpriteBase {
-
+    boolean horizontalorVertical = false;
     Image idleUp;
     Image idleDown;
     Image idleLeft;
@@ -286,5 +286,83 @@ public abstract class SpriteBase {
     }
 
     public abstract void checkRemovability();
+    public void AI (double Playerx, double Playery){
 
-}
+        double toworkonx = Playerx;
+        double toworkony = Playery;
+        boolean currentmovement = false;
+        boolean canmovedown = mapLevel.canMoveDown(x, y);
+        boolean canmoveup = mapLevel.canMoveUp(x, y);
+        boolean canmoveleft = mapLevel.canMoveLeft(x, y);
+        boolean canmoveright = mapLevel.canMoveRight(x,y);
+
+        if(dy > 0){
+            currentmovement = canmovedown;
+        }
+        if(dy < 0){
+            currentmovement = canmoveup;
+        }
+        if(dx < 0){
+            currentmovement = canmoveleft;
+        }
+        if(dx > 0){
+            currentmovement = canmoveright;
+        }
+
+        if(toworkony < y && canmoveup && frame ==0){
+            dx = 0;
+            dy = -5;
+        }
+
+        else if(toworkony > y && canmovedown && frame ==0){
+            dx = 0;
+            dy = 5;
+        }
+
+        else if(toworkonx < x && canmoveright && frame == 0){
+            dx = 5;
+            dy = 0;
+        }
+
+        else if(toworkonx > x && canmoveleft && frame ==0){
+            dx = -5;
+            dy = 0;
+        }
+
+        if(!currentmovement){
+            dy = 0;
+            dx = 0;
+            if(toworkony < y && canmoveup && !horizontalorVertical){
+                dy = -5;
+                horizontalorVertical = !horizontalorVertical;
+            }
+            else if(toworkony > y && canmovedown && !horizontalorVertical){
+                dy = 5;
+                horizontalorVertical = !horizontalorVertical;
+            }
+            else if (toworkonx < x && canmoveleft && horizontalorVertical){
+                dx = -5;
+                horizontalorVertical = !horizontalorVertical;
+            }
+            else if(toworkonx > x && canmoveright && horizontalorVertical){
+                dx = 5;
+                horizontalorVertical = !horizontalorVertical;
+            }
+            else{
+                if(canmoveup){
+                    dy = -5;
+                }
+                else if(canmovedown){
+                    dy = 5;
+                }
+                else if (canmoveright){
+                    dx = 5;
+                }
+                else if (canmoveleft){
+                    dx = -5;
+                }
+            }
+
+        }}
+
+    }
