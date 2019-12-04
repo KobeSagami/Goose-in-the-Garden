@@ -80,7 +80,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intX==31){
+        if (intX==30){
             return false;
         }
         return mapBool[intX+1][intY];

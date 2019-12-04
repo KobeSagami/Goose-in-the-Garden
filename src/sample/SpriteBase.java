@@ -290,7 +290,44 @@ public abstract class SpriteBase {
 
         double toworkonx = Playerx;
         double toworkony = Playery;
-        boolean currentmovement = false;
+
+        if(frame%3==0){
+            if(Math.abs(Playerx-x)<Math.abs(Playery-y)){
+                 if(Playerx>x && mapLevel.canMoveRight(x, y)) {
+                    dy = 0;
+                    dx = 5;
+                 }else if (Playerx<x && mapLevel.canMoveLeft(x,y)){
+                    dy = 0;
+                    dx = -5;
+                 }else if (Playery> y && mapLevel.canMoveDown(x, y) ){
+                    dy = 5;
+                    dx = 0;
+                 }else{
+                    dy = -5;
+                    dx = 0;
+                 }
+
+            }else{
+                if(Playery>y && mapLevel.canMoveDown(x, y)) {
+                    dy = 5;
+                    dx = 0;
+                }else if (Playery<y && mapLevel.canMoveUp(x,y)){
+                    dy = -5;
+                    dx = 0;
+                }else if (Playerx> x && mapLevel.canMoveRight(x, y) ){
+                    dy = 0;
+                    dx = 5;
+                }else{
+                    dy = 0;
+                    dx = -5;
+                }
+            }
+
+
+
+        }
+
+      /*  boolean currentmovement = false;
         boolean canmovedown = mapLevel.canMoveDown(x, y);
         boolean canmoveup = mapLevel.canMoveUp(x, y);
         boolean canmoveleft = mapLevel.canMoveLeft(x, y);
@@ -363,6 +400,10 @@ public abstract class SpriteBase {
                 }
             }
 
-        }}
+        }
+       */ }
+
+
+
 
     }
