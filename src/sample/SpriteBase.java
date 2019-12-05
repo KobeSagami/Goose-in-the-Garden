@@ -50,7 +50,7 @@ public abstract class SpriteBase {
 
     boolean canMove = true;
 
-    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy,String mapName) {
+    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy,String mapName, String color) {
 
         try {
             mapLevel = new CheckMap(mapName);
@@ -59,7 +59,7 @@ public abstract class SpriteBase {
         }
 
         this.layer = layer;
-        this.color = "white";
+        this.color = color;
 
         idleDown = new Image(getClass().getResource("Images/chickens/" + color + "ChickenDown2.png").toExternalForm());
         idleLeft = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft2.png").toExternalForm());
@@ -291,7 +291,7 @@ public abstract class SpriteBase {
         double toworkonx = Playerx;
         double toworkony = Playery;
 
-        if(frame%3==0){
+        if(frame%6==0){
             if(Math.abs(Playerx-x)<Math.abs(Playery-y)){
                  if(Playerx>x && mapLevel.canMoveRight(x, y)) {
                     dy = 0;

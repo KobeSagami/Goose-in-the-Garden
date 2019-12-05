@@ -14,9 +14,9 @@ public class Player extends SpriteBase {
 
     double speed;
 
-    public Player(Pane layer, Image image, double x, double y, double dx, double dy, double speed, Input input,String mapName) {
+    public Player(Pane layer, Image image, double x, double y, double dx, double dy, double speed, Input input,String mapName, String color) {
 
-        super(layer, image, x, y,  dx, dy, mapName);
+        super(layer, image, x, y,  dx, dy, mapName,color);
 
         this.speed = speed;
         this.input = input;

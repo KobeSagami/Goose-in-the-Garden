@@ -71,7 +71,7 @@ public class Game extends Application {
 
         createScoreLayer();
         createPlayer();
-        spawnEnemies(75, 75);
+        spawnEnemies(75, 75,"clay");
         AnimationTimer gameLoop = new AnimationTimer() {
 
             @Override
@@ -150,14 +150,14 @@ public class Game extends Application {
         double y = 350;
 
         // create player
-        Player player = new Player(playfieldLayer, image, x, y,  0, 0 , Settings.PLAYER_SPEED, input,mapName);
+        Player player = new Player(playfieldLayer, image, x, y,  0, 0 , Settings.PLAYER_SPEED, input,mapName,"white");
 
         // register player
         players.add( player);
 
     }
 
-    private void spawnEnemies( int x, int y) {
+    private void spawnEnemies( int x, int y,String color) {
 
         // image
         Image image = enemyImage;
@@ -165,7 +165,7 @@ public class Game extends Application {
         // random speed
 
 
-        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 5,  0 ,mapName);
+        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 5,  0 ,mapName, color);
 
         // manage sprite
         enemies.add( enemy);
