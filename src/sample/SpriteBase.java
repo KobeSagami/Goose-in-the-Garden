@@ -427,7 +427,6 @@ public abstract class SpriteBase {
 
             //Move to last detected position
             if (playerSpottedX != -10000){
-                System.out.println("moving");
                 if (Math.abs(px - x) < 20){
                  if (playerSpottedY < y && mapLevel.canMoveUp(x,y)){
                      dy = -5;
