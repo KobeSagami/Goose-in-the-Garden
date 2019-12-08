@@ -1,11 +1,17 @@
 package sample;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -13,7 +19,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.awt.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -44,8 +52,7 @@ public class Game extends Application {
     public Game() throws URISyntaxException {
     }
 
-    @Override
-    public void start(Stage primaryStage) {
+    public void startGame(Stage primaryStage) {
         Image background = new Image("sample/Map.jpg");
         ImageView backgroundView = new ImageView();
         backgroundView.setImage(background);
@@ -106,7 +113,156 @@ public class Game extends Application {
             }
 
         };
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+            @Override
+            public void handle(KeyEvent event){
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    gameLoop.stop();
+                    start(primaryStage);
+                }
+            }
+        });
         gameLoop.start();
+
+    }
+
+    @Override
+    public void start(Stage primaryStage){
+
+        //Getting Scene Size
+        double sceneWidth = (int)Math.round(Settings.SCENE_WIDTH);
+        double sceneHeight = (int)Math.round(Settings.SCENE_HEIGHT);
+
+        //The center of the background art is not the true center of the screen, so
+        //a small adjustment is made to make sure the everything is in the center of
+        //the background art.
+        double xAdjustment = sceneWidth/65;
+        double xCenter = Math.round(sceneWidth/2 - xAdjustment);
+        double yCenter = Math.round(sceneHeight/2);
+
+        //Creating images
+        Image background = new Image("sample/Images/menu/blankmenu.jpg");
+        Image title = new Image("sample/Images/menu/title.png");
+        Image start = new Image("sample/Images/menu/start.png");
+        Image instructions = new Image("sample/Images/menu/instructions.png");
+
+        //Setting image views
+        ImageView backgroundView = new ImageView(background);
+        ImageView titleView = new ImageView(title);
+        ImageView startView = new ImageView(start);
+        ImageView instructionsView = new ImageView(instructions);
+
+
+        //Setting image positions
+        Point.Double titlePos = new Point.Double(xCenter, (sceneHeight*0.28));
+        Point.Double startPos = new Point.Double(xCenter, (sceneHeight*0.52));
+        Point.Double instructionsPos = new Point.Double(xCenter, (sceneHeight*0.65));
+
+        titleView.setX(titlePos.x);
+        titleView.setY(titlePos.y);
+        startView.setX(startPos.x);
+        startView.setY(startPos.y);
+        instructionsView.setX(instructionsPos.x);
+        instructionsView.setY(instructionsPos.y);
+
+        ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
+        imageViews.add(backgroundView);
+        imageViews.add(titleView);
+        imageViews.add(startView);
+        imageViews.add(instructionsView);
+
+        Group root = new Group();
+
+        //scale images, fix positions, and add to group
+        for(int i=0;i<imageViews.size();i++){
+            ImageTools.scaleImage(imageViews.get(i), sceneWidth, sceneHeight);
+            if (imageViews.get(i) != backgroundView){
+                ImageTools.centerImage(imageViews.get(i));
+            }
+            root.getChildren().add(imageViews.get(i));
+        }
+
+        //Selected Menu Option Animation
+        ScaleTransition selectedTransition = new ScaleTransition();
+        selectedTransition.setDuration(Duration.millis(1000));
+        selectedTransition.setByX(0.1);
+        selectedTransition.setByY(0.1);
+        selectedTransition.setCycleCount(Integer.MAX_VALUE);
+        selectedTransition.setAutoReverse(true);
+        selectedTransition.setNode(startView);
+        selectedTransition.play();
+
+        int[] select = {1};
+
+
+        startView.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        selectedTransition.playFrom(Duration.millis(0));
+                        selectedTransition.stop();
+                        selectedTransition.setNode(startView);
+                        selectedTransition.play();
+                        select[0] = 1;
+                    }
+                }
+        );
+        startView.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        startGame(primaryStage);
+                    }
+                }
+        );
+        instructionsView.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        selectedTransition.playFrom(Duration.millis(0));
+                        selectedTransition.stop();
+                        selectedTransition.setNode(instructionsView);
+                        selectedTransition.play();
+                        select[0] = 2;
+                    }
+                }
+        );
+
+        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+            @Override
+            public void handle(KeyEvent event){
+                switch(event.getCode()){
+
+                    case UP:
+                        selectedTransition.playFrom(Duration.millis(0));
+                        selectedTransition.stop();
+                        selectedTransition.setNode(startView);
+                        selectedTransition.play();
+                        select[0] = 1;
+                        break;
+
+                    case DOWN:
+                        selectedTransition.playFrom(Duration.millis(0));
+                        selectedTransition.stop();
+                        selectedTransition.setNode(instructionsView);
+                        selectedTransition.play();
+                        select[0] = 2;
+                        break;
+
+                    case ENTER:
+                        if (select[0] == 1){
+                            startGame(primaryStage);
+                        }
+                }
+            }
+        });
+
 
     }
 
