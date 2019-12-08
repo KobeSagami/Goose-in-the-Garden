@@ -456,11 +456,11 @@ public abstract class SpriteBase {
                     dx = 0;
                 }
             }
+        }
             else{
                 dy = 0;
                 dx = 0;
             }
-        }
             System.out.println(dy + " " + dx);
             System.out.println(playerSpottedX + " " + playerSpottedY);
     }
