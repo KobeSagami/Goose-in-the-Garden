@@ -122,6 +122,7 @@ public class Game extends Application {
             public void handle(KeyEvent event){
                 if (event.getCode() == KeyCode.ESCAPE) {
                     gameLoop.stop();
+                    enemies.removeAll(enemies);
                     start(primaryStage);
                 }
             }
