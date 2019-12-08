@@ -461,8 +461,6 @@ public abstract class SpriteBase {
                 dy = 0;
                 dx = 0;
             }
-            System.out.println(dy + " " + dx);
-            System.out.println(playerSpottedX + " " + playerSpottedY);
     }
 //        if (frame % 6 == 0) {
 //            if (Math.abs(px - x) < 20){
