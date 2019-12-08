@@ -427,16 +427,20 @@ public abstract class SpriteBase {
 
             //Move to last detected position
             if (playerSpottedX != -10000){
-                if (Math.abs(playerSpottedX - x) < 20){
+             if (Math.abs(playerSpottedX - x) < 20 && Math.abs(playerSpottedY - y) < 20){
+                    dx = 0;
+                    dy = 0;
+             }
+             else if (Math.abs(playerSpottedX - x) < 20){
                  if (playerSpottedY < y && mapLevel.canMoveUp(x,y)){
                      dy = -5;
                      dx = 0;
-                 }
+                     }
                 else if (playerSpottedY > y && mapLevel.canMoveDown(x,y)){
                      dy = 5;
                      dx = 0;
+                    }
                 }
-            }
             else if (Math.abs(playerSpottedY - y) < 20){
                 if (playerSpottedX < x && mapLevel.canMoveLeft(x,y)){
                     dy = 0;
