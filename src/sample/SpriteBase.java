@@ -38,6 +38,9 @@ public abstract class SpriteBase {
     double dy;
     double dr;
 
+    double playerSpottedX = -10000;
+    double playerSpottedY = -10000;
+
     double health;
     double damage;
 
@@ -394,6 +397,99 @@ public abstract class SpriteBase {
 
         }
        */
+    }
+
+    public void LOS(double Playerx, double Playery){
+        double px = Playerx;
+        double py = Playery;
+        if (frame % 6 == 0) {
+            //Detect player
+            if (Math.abs(px - x) < 20){
+                if (py < y && mapLevel.canMoveUp(x,y)){
+                    playerSpottedX = px;
+                    playerSpottedY = py;
+                }
+                else if (py > y && mapLevel.canMoveDown(x,y)){
+                    playerSpottedX = px;
+                    playerSpottedY = py;
+                }
+            }
+            else if (Math.abs(py - y) < 20){
+                if (px < x && mapLevel.canMoveLeft(x,y)){
+                    playerSpottedX = px;
+                    playerSpottedY = py;
+                }
+                else if (px > x && mapLevel.canMoveRight(x,y)){
+                    playerSpottedX = px;
+                    playerSpottedY = py;
+                }
+            }
+
+            //Move to last detected position
+            if (playerSpottedX != -10000){
+                System.out.println("moving");
+                if (Math.abs(px - x) < 20){
+                 if (playerSpottedY < y && mapLevel.canMoveUp(x,y)){
+                     dy = -5;
+                     dx = 0;
+                 }
+                else if (playerSpottedY > y && mapLevel.canMoveDown(x,y)){
+                     dy = 5;
+                     dx = 0;
+                }
+                else{
+                     dy = 0;
+                     dx = 0;
+                }
+            }
+            else if (Math.abs(py - y) < 20){
+                if (playerSpottedX < x && mapLevel.canMoveLeft(x,y)){
+                    dy = 0;
+                    dx = -5;
+                }
+                else if (playerSpottedX > x && mapLevel.canMoveRight(x,y)){
+                    dy = 0;
+                    dx = 5;
+                }
+                else{
+                    dy = 0;
+                    dx = 0;
+                }
+            }
+            else{
+                dy = 0;
+                dx = 0;
+            }
+        }
+            System.out.println(dy + " " + dx);
+            System.out.println(playerSpottedX + " " + playerSpottedY);
+    }
+//        if (frame % 6 == 0) {
+//            if (Math.abs(px - x) < 20){
+//                 if (py < y && mapLevel.canMoveUp(x,y)){
+//                     dy = -5;
+//                     dx = 0;
+//                 }
+//                else if (py > y && mapLevel.canMoveDown(x,y)){
+//                     dy = 5;
+//                     dx = 0;
+//                }
+//            }
+//            else if (Math.abs(py - y) < 20){
+//                if (px < x && mapLevel.canMoveLeft(x,y)){
+//                    dy = 0;
+//                    dx = -5;
+//                }
+//                else if (px > x && mapLevel.canMoveRight(x,y)){
+//                    dy = 0;
+//                    dx = 5;
+//                }
+//            }
+//            else {
+//                dy = 0;
+//                dx = 0;
+//            }
+//        }
     }
 
     public void menuAI() {

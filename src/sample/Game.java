@@ -95,7 +95,7 @@ public class Game extends Application {
 
                 // movement
                 players.forEach(sprite -> sprite.move());
-                enemies.forEach(sprite-> sprite.AI(players.get(0).getX(), players.get(0).getY()));
+                enemies.forEach(sprite-> sprite.LOS(players.get(0).getX(), players.get(0).getY()));
                 enemies.forEach(sprite -> sprite.move());
 
                 // check collisions
@@ -123,6 +123,7 @@ public class Game extends Application {
                 if (event.getCode() == KeyCode.ESCAPE) {
                     gameLoop.stop();
                     enemies.removeAll(enemies);
+                    players.removeAll(players);
                     start(primaryStage);
                 }
             }
@@ -191,7 +192,7 @@ public class Game extends Application {
 
         //Selected Menu Option Animation
         ScaleTransition selectedTransition = new ScaleTransition();
-        selectedTransition.setDuration(Duration.millis(1000));
+        selectedTransition.setDuration(Duration.millis(800));
         selectedTransition.setByX(0.1);
         selectedTransition.setByY(0.1);
         selectedTransition.setCycleCount(Integer.MAX_VALUE);
@@ -206,7 +207,7 @@ public class Game extends Application {
         root.getChildren().add(playfieldLayer);
         loadGame();
         spawnEnemies(50, 50,"clay");
-        spawnEnemies(750, 750,"clay");
+        spawnEnemies(700, 700,"clay");
         spawnEnemies(750, 50,"white");
         spawnEnemies(50, 750,"white");
         spawnEnemies(400, 750,"white");
@@ -231,11 +232,8 @@ public class Game extends Application {
             }
 
         };
-        gameLoop.start();
-
 
         //Event handlers for navigating menu
-
         startView.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 new EventHandler<MouseEvent>() {
                     @Override
@@ -253,6 +251,7 @@ public class Game extends Application {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         gameLoop.stop();
+                        enemies.removeAll(enemies);
                         startGame(primaryStage);
                     }
                 }
@@ -297,12 +296,14 @@ public class Game extends Application {
                     case ENTER:
                         if (select[0] == 1){
                             gameLoop.stop();
+                            enemies.removeAll(enemies);
                             startGame(primaryStage);
                         }
                 }
             }
         });
 
+        gameLoop.start();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -365,7 +366,7 @@ public class Game extends Application {
         Enemy enemy = new Enemy( playfieldLayer, image, x, y, 5,  0 ,mapName, color);
 
         // manage sprite
-        enemies.add( enemy);
+        enemies.add(enemy);
 
     }
 
