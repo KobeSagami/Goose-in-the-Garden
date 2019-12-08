@@ -19,5 +19,4 @@ public class Enemy extends SpriteBase {
 
 
     }
-    
 }

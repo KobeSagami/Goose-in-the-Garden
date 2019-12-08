@@ -69,6 +69,13 @@ public class Player extends SpriteBase {
             dy = 0;
             dx = speed;
         }
+
+
+        //no direction
+        if (!input.isMoveUp() && !input.isMoveDown() && !input.isMoveLeft() && !input.isMoveRight()){
+            dy = 0;
+            dx = 0;
+        }
     }
 
     @Override

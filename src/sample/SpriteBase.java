@@ -50,7 +50,7 @@ public abstract class SpriteBase {
 
     boolean canMove = true;
 
-    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy,String mapName, String color) {
+    public SpriteBase(Pane layer, Image image, double x, double y, double dx, double dy, String mapName, String color) {
 
         try {
             mapLevel = new CheckMap(mapName);
@@ -164,14 +164,12 @@ public abstract class SpriteBase {
             return;
 
         double[] movement;
-        movement = mapLevel.movement(x,y,dx,dy);
-        x =movement[0];
-        y =movement[1];
+        movement = mapLevel.movement(x, y, dx, dy);
+        x = movement[0];
+        y = movement[1];
 
-        if (dx < 0)
-        {
-            switch(frame)
-            {
+        if (dx < 0) {
+            switch (frame) {
                 case 0:
                 case 30:
                     spriteAnimation.setImage(idleLeft);
@@ -186,10 +184,8 @@ public abstract class SpriteBase {
                     break;
             }
         }
-        if (dx > 0)
-        {
-            switch(frame)
-            {
+        if (dx > 0) {
+            switch (frame) {
                 case 0:
                 case 30:
                     spriteAnimation.setImage(idleRight);
@@ -204,10 +200,8 @@ public abstract class SpriteBase {
                     break;
             }
         }
-        if (dy > 0)
-        {
-            switch(frame)
-            {
+        if (dy > 0) {
+            switch (frame) {
                 case 0:
                 case 30:
                     spriteAnimation.setImage(idleDown);
@@ -222,10 +216,8 @@ public abstract class SpriteBase {
                     break;
             }
         }
-        if (dy < 0)
-        {
-            switch(frame)
-            {
+        if (dy < 0) {
+            switch (frame) {
                 case 0:
                 case 30:
                     spriteAnimation.setImage(idleUp);
@@ -286,43 +278,43 @@ public abstract class SpriteBase {
     }
 
     public abstract void checkRemovability();
-    public void AI (double Playerx, double Playery){
+
+    public void AI(double Playerx, double Playery) {
 
         double toworkonx = Playerx;
         double toworkony = Playery;
 
-        if(frame%6==0){
-            if(Math.abs(Playerx-x)<Math.abs(Playery-y)){
-                 if(Playerx>x && mapLevel.canMoveRight(x, y)) {
+        if (frame % 6 == 0) {
+            if (Math.abs(Playerx - x) < Math.abs(Playery - y)) {
+                if (Playerx > x && mapLevel.canMoveRight(x, y)) {
                     dy = 0;
                     dx = 5;
-                 }else if (Playerx<x && mapLevel.canMoveLeft(x,y)){
+                } else if (Playerx < x && mapLevel.canMoveLeft(x, y)) {
                     dy = 0;
                     dx = -5;
-                 }else if (Playery> y && mapLevel.canMoveDown(x, y) ){
+                } else if (Playery > y && mapLevel.canMoveDown(x, y)) {
                     dy = 5;
                     dx = 0;
-                 }else{
+                } else {
                     dy = -5;
                     dx = 0;
-                 }
+                }
 
-            }else{
-                if(Playery>y && mapLevel.canMoveDown(x, y)) {
+            } else {
+                if (Playery > y && mapLevel.canMoveDown(x, y)) {
                     dy = 5;
                     dx = 0;
-                }else if (Playery<y && mapLevel.canMoveUp(x,y)){
+                } else if (Playery < y && mapLevel.canMoveUp(x, y)) {
                     dy = -5;
                     dx = 0;
-                }else if (Playerx> x && mapLevel.canMoveRight(x, y) ){
+                } else if (Playerx > x && mapLevel.canMoveRight(x, y)) {
                     dy = 0;
                     dx = 5;
-                }else{
+                } else {
                     dy = 0;
                     dx = -5;
                 }
             }
-
 
 
         }
@@ -401,9 +393,57 @@ public abstract class SpriteBase {
             }
 
         }
-       */ }
-
-
-
-
+       */
     }
+
+    public void menuAI() {
+        int dir;
+        if (frame % 6 == 0) {
+            dir = (int)Math.round(Math.random()* 25);
+
+            switch(dir){
+                case 1:
+                    if(mapLevel.canMoveUp(x, y)){
+                        dy = -4;
+                        dx = 0;
+                    }
+                break;
+
+                case 2:
+                    if(mapLevel.canMoveDown(x, y)){
+                        dy = 4;
+                        dx = 0;
+                    }
+                    break;
+
+                case 3:
+                    if(mapLevel.canMoveLeft(x, y)){
+                        dy = 0;
+                        dx = -4;
+                    }
+                    break;
+
+                case 4:
+                    if(mapLevel.canMoveRight(x, y)){
+                        dy = 0;
+                        dx = 4;
+                    }
+                    break;
+                default:
+                    if (dx > 0){
+                        dx = dx - 1;
+                    }
+                    if (dx < 0){
+                        dx = dx + 1;
+                    }
+
+                    if (dy > 0){
+                        dy = dy - 1;
+                    }
+                    if (dy < 0){
+                        dy = dy + 1;
+                    }
+            }
+        }
+    }
+}

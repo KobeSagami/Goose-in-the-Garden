@@ -36,7 +36,7 @@ public class Game extends Application {
     Pane playfieldLayer;
     Pane scoreLayer;
 
-    String mapName = "Map1.csv";
+    String mapName;
 
     Image playerImage;
     Image enemyImage;
@@ -53,6 +53,9 @@ public class Game extends Application {
     }
 
     public void startGame(Stage primaryStage) {
+
+
+        mapName = "Map1.csv";
         Image background = new Image("sample/Map.jpg");
         ImageView backgroundView = new ImageView();
         backgroundView.setImage(background);
@@ -130,12 +133,14 @@ public class Game extends Application {
     @Override
     public void start(Stage primaryStage){
 
+        mapName = "MenuMap.csv";
+
         //Getting Scene Size
         double sceneWidth = (int)Math.round(Settings.SCENE_WIDTH);
         double sceneHeight = (int)Math.round(Settings.SCENE_HEIGHT);
 
         //The center of the background art is not the true center of the screen, so
-        //a small adjustment is made to make sure the everything is in the center of
+        //a small adjustment is made to make sure everything is in the center of
         //the background art.
         double xAdjustment = sceneWidth/65;
         double xCenter = Math.round(sceneWidth/2 - xAdjustment);
@@ -192,9 +197,43 @@ public class Game extends Application {
         selectedTransition.setAutoReverse(true);
         selectedTransition.setNode(startView);
         selectedTransition.play();
-
         int[] select = {1};
 
+
+        //Chicken animations
+        playfieldLayer = new Pane();
+        root.getChildren().add(playfieldLayer);
+        loadGame();
+        spawnEnemies(50, 50,"clay");
+        spawnEnemies(750, 750,"clay");
+        spawnEnemies(750, 50,"white");
+        spawnEnemies(50, 750,"white");
+        spawnEnemies(400, 750,"white");
+        spawnEnemies(400, 50,"clay");
+        spawnEnemies(750, 400,"white");
+
+        AnimationTimer gameLoop = new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+                enemies.forEach(sprite-> sprite.menuAI());
+                enemies.forEach(sprite -> sprite.move());
+
+                //update sprites
+                enemies.forEach(sprite -> sprite.updateUI());
+
+                // check if sprite can be removed
+                enemies.forEach(sprite -> sprite.checkRemovability());
+
+                // remove removables from list, layer, etc
+                removeSprites( enemies);
+            }
+
+        };
+        gameLoop.start();
+
+
+        //Event handlers for navigating menu
 
         startView.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 new EventHandler<MouseEvent>() {
@@ -212,6 +251,7 @@ public class Game extends Application {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        gameLoop.stop();
                         startGame(primaryStage);
                     }
                 }
@@ -230,8 +270,6 @@ public class Game extends Application {
         );
 
         scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
 
@@ -257,13 +295,15 @@ public class Game extends Application {
 
                     case ENTER:
                         if (select[0] == 1){
+                            gameLoop.stop();
                             startGame(primaryStage);
                         }
                 }
             }
         });
 
-
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     private void loadGame() {
