@@ -366,7 +366,7 @@ public class Game extends Application {
         // random speed
 
 
-        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 5,  0 ,mapName, color);
+        Enemy enemy = new Enemy( playfieldLayer, image, x, y, 0,  0 ,mapName, color);
 
         // manage sprite
         enemies.add(enemy);

@@ -40,12 +40,15 @@ public abstract class SpriteBase {
 
     double playerSpottedX = -10000;
     double playerSpottedY = -10000;
+    double detectTimer;
+    double detectTime = 10;
     double detectSize = 50;
     double moveToSize = 14;
 
     double health;
     double damage;
     double speed = 2;
+    double patrolSpeed = 1;
 
     boolean removable = false;
 
@@ -434,10 +437,11 @@ public abstract class SpriteBase {
                 //spriteAnimation.setImage(alert);
                 playerSpottedX = px;
                 playerSpottedY = py;
+                detectTimer = detectTime;
             }
 
             //Move to last detected position
-            if (playerSpottedX != -10000)
+            if (playerSpottedX != -10000 && detectTimer > 0)
             {
                 
                 //If at last detected location, don't move
@@ -504,6 +508,42 @@ public abstract class SpriteBase {
                         dy = 0;
                      }
                  }
+                 detectTimer--;
+            }
+            //Lost interest, patrol
+            else if (detectTimer < 1){
+                switch((int)(Math.random()*20)){
+                    case 1:
+                       if(mapLevel.canMoveUp(x,y)){
+                           dx = 0;
+                           dy = -patrolSpeed;
+                       }
+                    break;
+
+                    case 2:
+                        if(mapLevel.canMoveDown(x,y)){
+                            dx = 0;
+                            dy = patrolSpeed;
+                        }
+                    break;
+
+                    case 3:
+                        if(mapLevel.canMoveLeft(x,y)){
+                            dx = -patrolSpeed;
+                            dy = 0;
+                        }
+                    break;
+
+                    case 4:
+                        if(mapLevel.canMoveRight(x,y)){
+                            dx = patrolSpeed;
+                            dy = 0;
+                        }
+                    break;
+
+                    default:
+                    break;
+                }
             }
             //No last seen position, don't move
             else
@@ -527,14 +567,14 @@ public abstract class SpriteBase {
             switch(dir){
                 case 1:
                     if(mapLevel.canMoveUp(x, y)){
-                        dy = -4;
+                        dy = -patrolSpeed;
                         dx = 0;
                     }
                 break;
 
                 case 2:
                     if(mapLevel.canMoveDown(x, y)){
-                        dy = 4;
+                        dy = patrolSpeed;
                         dx = 0;
                     }
                     break;
@@ -542,30 +582,36 @@ public abstract class SpriteBase {
                 case 3:
                     if(mapLevel.canMoveLeft(x, y)){
                         dy = 0;
-                        dx = -4;
+                        dx = -patrolSpeed;
                     }
                     break;
 
                 case 4:
                     if(mapLevel.canMoveRight(x, y)){
                         dy = 0;
-                        dx = 4;
+                        dx = patrolSpeed;
                     }
                     break;
+
+                case 5:
+                    dx = 0;
+                    dy = 0;
+                break;
                 default:
                     if (dx > 0){
-                        dx = dx - 1;
+                        dx = dx - .1;
                     }
                     if (dx < 0){
-                        dx = dx + 1;
+                        dx = dx + .1;
                     }
 
                     if (dy > 0){
-                        dy = dy - 1;
+                        dy = dy - .1;
                     }
                     if (dy < 0){
-                        dy = dy + 1;
+                        dy = dy + .1;
                     }
+                break;
             }
         }
     }
