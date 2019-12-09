@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 import java.net.URISyntaxException;
 
 public abstract class SpriteBase {
-    boolean horizontalorVertical = false;
     Image idleUp;
     Image idleDown;
     Image idleLeft;
@@ -42,11 +41,11 @@ public abstract class SpriteBase {
     double playerSpottedX = -10000;
     double playerSpottedY = -10000;
     double detectSize = 50;
-    double moveToSize = 35;
+    double moveToSize = 14;
 
     double health;
     double damage;
-    double speed = 3;
+    double speed = 2;
 
     boolean removable = false;
 
