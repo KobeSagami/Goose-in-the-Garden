@@ -42,7 +42,7 @@ public abstract class SpriteBase {
     double playerSpottedX = -10000;
     double playerSpottedY = -10000;
     double detectSize = 50;
-    double moveToSize = 31;
+    double moveToSize = 35;
 
     double health;
     double damage;
