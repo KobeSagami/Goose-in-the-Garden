@@ -41,7 +41,7 @@ public abstract class SpriteBase {
     double playerSpottedX = -10000;
     double playerSpottedY = -10000;
     double detectTimer;
-    double detectTime = 10;
+    double detectTime = 20;
     double detectSize = 50;
     double moveToSize = 14;
 

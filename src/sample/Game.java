@@ -148,7 +148,7 @@ public class Game extends Application {
         //a small adjustment is made to make sure everything is in the center of
         //the background art.
         double xAdjustment = sceneWidth/65;
-        double xCenter = Math.round(sceneWidth/2 - xAdjustment);
+        double xCenter = Math.round(sceneWidth/2);
         double yCenter = Math.round(sceneHeight/2);
 
         //Creating images
