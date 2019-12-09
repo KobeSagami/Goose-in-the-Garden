@@ -13,6 +13,7 @@ public abstract class SpriteBase {
     Image idleDown;
     Image idleLeft;
     Image idleRight;
+    Image alert;
     Image moveLeft1;
     Image moveLeft2;
     Image moveRight1;
@@ -40,9 +41,12 @@ public abstract class SpriteBase {
 
     double playerSpottedX = -10000;
     double playerSpottedY = -10000;
+    double detectSize = 50;
+    double moveToSize = 31;
 
     double health;
     double damage;
+    double speed = 3;
 
     boolean removable = false;
 
@@ -68,6 +72,7 @@ public abstract class SpriteBase {
         idleLeft = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft2.png").toExternalForm());
         idleRight = new Image(getClass().getResource("Images/chickens/" + color + "ChickenRight2.png").toExternalForm());
         idleUp = new Image(getClass().getResource("Images/chickens/" + color + "ChickenUp2.png").toExternalForm());
+        alert = new Image(getClass().getResource("Images/chickens/clayChickenAlert.png").toExternalForm());
 
         moveLeft1 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft1.png").toExternalForm());
         moveLeft2 = new Image(getClass().getResource("Images/chickens/" + color + "ChickenLeft3.png").toExternalForm());
@@ -399,94 +404,120 @@ public abstract class SpriteBase {
        */
     }
 
-    public void LOS(double Playerx, double Playery){
+    public void LOS(double Playerx, double Playery)
+    {
         double px = Playerx;
         double py = Playery;
-        if (frame % 6 == 0) {
-            //Detect player
-            if (Math.abs(px - x) < 20){
-                if (py < y && mapLevel.canMoveUp(x,y)){
-                    playerSpottedX = px;
-                    playerSpottedY = py;
-                }
-                else if (py > y && mapLevel.canMoveDown(x,y)){
-                    playerSpottedX = px;
-                    playerSpottedY = py;
-                }
-            }
-            else if (Math.abs(py - y) < 20){
-                if (px < x && mapLevel.canMoveLeft(x,y)){
-                    playerSpottedX = px;
-                    playerSpottedY = py;
-                }
-                else if (px > x && mapLevel.canMoveRight(x,y)){
-                    playerSpottedX = px;
-                    playerSpottedY = py;
-                }
+        //Debug info
+//        if (frame % 227 == 0){
+//            System.out.println("Player spotted: " + playerSpottedX + " " + playerSpottedY);
+//            System.out.println("Spotted X distance: " + distTo(playerSpottedX, x));
+//            System.out.println("Spotted Y distance: " + distTo(playerSpottedY, y));
+//            System.out.println("Player xy:" + px + " " + py);
+//            System.out.println("Enemy xy:" + x + " " + y);
+//        }
+        if (frame % 6 == 0) 
+        {
+
+            //Detect in LOS
+            if (mapLevel.canSee(px,py,x,y) ||
+                    //check if enemy can see any tiles adjacent to player
+                    mapLevel.canSee(px + 25, py, x, y) ||
+                    mapLevel.canSee(px-25, py, x, y) ||
+                    mapLevel.canSee(px,py+25,x,y) ||
+                    mapLevel.canSee(px,py-25,x,y) ||
+                    //check if player can see any tiles adjacent to enemy
+                    mapLevel.canSee(px,py, x+25,y) ||
+                    mapLevel.canSee(px,py, x-25,y) ||
+                    mapLevel.canSee(px,py, x, y+25) ||
+                    mapLevel.canSee(px,py, x,y-25))
+            {
+                //spriteAnimation.setImage(alert);
+                playerSpottedX = px;
+                playerSpottedY = py;
             }
 
             //Move to last detected position
-            if (playerSpottedX != -10000){
-             if (Math.abs(playerSpottedX - x) < 20 && Math.abs(playerSpottedY - y) < 20){
-                    dx = 0;
-                    dy = 0;
-             }
-             else if (Math.abs(playerSpottedX - x) < 20){
-                 if (playerSpottedY < y && mapLevel.canMoveUp(x,y)){
-                     dy = -5;
-                     dx = 0;
+            if (playerSpottedX != -10000)
+            {
+                
+                //If at last detected location, don't move
+                 if (distTo(playerSpottedX, x) < moveToSize && distTo(playerSpottedY, y)< moveToSize)
+                 {
+                        dx = 0;
+                        dy = 0;
+                 }
+
+                 //If vertical LOS, move to X, then Y
+                 else if (distTo(playerSpottedX, x) < detectSize  && distTo(playerSpottedX,x) < distTo(playerSpottedY,y) && distTo(playerSpottedY, y) > moveToSize)
+                 {
+                     //Move Right
+                     if (playerSpottedX > x && distTo(playerSpottedY, y) > moveToSize && mapLevel.canMoveRight(x,y))
+                     {
+                         dx = speed;
+                         dy = 0;
                      }
-                else if (playerSpottedY > y && mapLevel.canMoveDown(x,y)){
-                     dy = 5;
-                     dx = 0;
-                    }
-                }
-            else if (Math.abs(playerSpottedY - y) < 20){
-                if (playerSpottedX < x && mapLevel.canMoveLeft(x,y)){
-                    dy = 0;
-                    dx = -5;
-                }
-                else if (playerSpottedX > x && mapLevel.canMoveRight(x,y)){
-                    dy = 0;
-                    dx = 5;
-                }
-                else{
-                    dy = 0;
-                    dx = 0;
-                }
+                     //Move Left
+                     else if (playerSpottedX < x && distTo(playerSpottedX, x) > moveToSize && mapLevel.canMoveLeft(x,y))
+                     {
+                        dx = -speed;
+                        dy = 0;
+                     }
+                     //Move Up
+                     else if (playerSpottedY < y && distTo(playerSpottedY, y) > moveToSize && mapLevel.canMoveUp(x,y))
+                     {
+                        dx = 0;
+                        dy = -speed;
+                     }
+                     //Move Down
+                     else if (playerSpottedY > y && distTo(playerSpottedY, y) > moveToSize && mapLevel.canMoveDown(x,y))
+                     {
+                        dx = 0;
+                        dy = speed;
+                     }
+                 }
+
+                 //If horizontal LOS, move to Y, then X
+                 else if (distTo(playerSpottedY, y) < detectSize && distTo(playerSpottedX,x) > distTo(playerSpottedY,y) && distTo(playerSpottedX, x) > moveToSize)
+                 {
+                     //Move Up
+                     if (playerSpottedY < y && distTo(playerSpottedY, y) > moveToSize && mapLevel.canMoveUp(x,y))
+                     {
+                        dx = 0;
+                        dy = -speed;
+                     }
+                     //Move Down
+                      else if (playerSpottedY > y && distTo(playerSpottedY, y) > moveToSize && mapLevel.canMoveDown(x,y))
+                     {
+                        dx = 0;
+                        dy = speed;
+                     }
+                     //Move Right
+                     else if (playerSpottedX > x && distTo(playerSpottedX, x) > moveToSize && mapLevel.canMoveRight(x,y))
+                     {
+                        dx = speed;
+                        dy = 0;
+                     }
+                     //Move Left
+                     else if (playerSpottedX < x && distTo(playerSpottedX, x) > moveToSize && mapLevel.canMoveLeft(x,y))
+                     {
+                        dx = -speed;
+                        dy = 0;
+                     }
+                 }
             }
-        }
-            else{
+            //No last seen position, don't move
+            else
+            {
                 dy = 0;
                 dx = 0;
             }
+        }
     }
-//        if (frame % 6 == 0) {
-//            if (Math.abs(px - x) < 20){
-//                 if (py < y && mapLevel.canMoveUp(x,y)){
-//                     dy = -5;
-//                     dx = 0;
-//                 }
-//                else if (py > y && mapLevel.canMoveDown(x,y)){
-//                     dy = 5;
-//                     dx = 0;
-//                }
-//            }
-//            else if (Math.abs(py - y) < 20){
-//                if (px < x && mapLevel.canMoveLeft(x,y)){
-//                    dy = 0;
-//                    dx = -5;
-//                }
-//                else if (px > x && mapLevel.canMoveRight(x,y)){
-//                    dy = 0;
-//                    dx = 5;
-//                }
-//            }
-//            else {
-//                dy = 0;
-//                dx = 0;
-//            }
-//        }
+
+    private double distTo(double a, double b){
+        double dist = Math.abs(a - b);
+        return dist;
     }
 
     public void menuAI() {

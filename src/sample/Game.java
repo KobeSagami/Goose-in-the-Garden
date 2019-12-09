@@ -82,6 +82,9 @@ public class Game extends Application {
         createScoreLayer();
         createPlayer();
         spawnEnemies(75, 75,"clay");
+        spawnEnemies(75, 700,"clay");
+        spawnEnemies(725, 75,"clay");
+        spawnEnemies(725, 700,"clay");
         AnimationTimer gameLoop = new AnimationTimer() {
 
             @Override

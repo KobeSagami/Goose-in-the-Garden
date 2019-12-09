@@ -70,7 +70,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intX==0){
+        if (intX<1){
             return false;
         }
 
@@ -80,7 +80,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intX==30){
+        if (intX>29){
             return false;
         }
         return mapBool[intX+1][intY];
@@ -89,7 +89,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intY==0){
+        if (intY<1){
             return false;
         }
         return mapBool[intX][intY-1];
@@ -98,10 +98,63 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intY==31){
+        if (intY>30){
             return false;
         }
         return mapBool[intX][intY+1];
+    }
+
+    public boolean canSee(double px, double py, double x, double y){
+        Integer intPX = (int)px/25;
+        Integer intPY = (int)py/25;
+        Integer intX = (int)x/25;
+        Integer intY = (int)y/25;
+
+        boolean pathX = false;
+        boolean pathY = false;
+
+
+        //Check vertical path
+
+        //Up
+        if ((intPX == intX) && (intPY < intY)){
+            for (int i = 0; i < intY - intPY;i++){
+                pathY = canMoveUp(x, y - (i*25));
+                if (pathY == false){
+                    break;
+                }
+            }
+        }
+        //Down
+        else if ((intPX == intX) && (intPY > intY)){
+            for (int i = 0; i < intPY - intY;i++){
+                pathY = canMoveDown(x, y + (i*25));
+                if (pathY == false){
+                    break;
+                }
+            }
+        }
+
+        //Horizontal Path
+        //Left
+        if ((intPY == intY) && (intPX < intX)){
+            for (int i = 0; i < intX - intPX;i++){
+                pathX = canMoveLeft(x-(i*25), y);
+                if (pathX == false){
+                    break;
+                }
+            }
+        }
+        //Right
+        else if ((intPY == intY) && (intPX > intX)){
+            for (int i = 0; i < intPX - intX;i++){
+                pathX = canMoveRight(x+(i*25), y);
+                if (pathX == false){
+                    break;
+                }
+            }
+        }
+        return (pathX || pathY);
     }
 
     public static void main(String[] args) throws URISyntaxException {
