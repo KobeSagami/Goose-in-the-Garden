@@ -557,23 +557,23 @@ public abstract class SpriteBase {
 
                 //Check patrol collisions
                 if (dx == patrolSpeed){
-                    if (x > 795) {
+                    if (x > 793) {
                         dx = 0;
                     }
                 }
                 else if (dx == -patrolSpeed){
-                    if (x < 5) {
+                    if (x < 7) {
                         dx = 0;
                     }
                 }
 
                 else if (dy == patrolSpeed){
-                    if ( y > 795) {
+                    if ( y > 793) {
                         dy = 0;
                     }
                 }
                 else if (dy == -patrolSpeed){
-                    if ( y < 5) {
+                    if ( y < 7) {
                         dy = 0;
                     }
                 }
@@ -650,23 +650,23 @@ public abstract class SpriteBase {
 
         //Check patrol collisions
         if (dx == patrolSpeed){
-            if (x > 795) {
+            if (x > 793) {
                 dx = 0;
             }
         }
         else if (dx == -patrolSpeed){
-            if (x < 5) {
+            if (x < 7) {
                 dx = 0;
             }
         }
 
         else if (dy == patrolSpeed){
-            if ( y > 795) {
+            if ( y > 793) {
                 dy = 0;
             }
         }
         else if (dy == -patrolSpeed){
-            if ( y < 5) {
+            if ( y < 7) {
                 dy = 0;
             }
         }
