@@ -46,7 +46,7 @@ public class CheckMap {
         moveX=x;
         moveY=y;
 
-        if ( mapBool[intX][intY]){
+        if (mapBool[intX][intY]){
             moveX=moveX+dx;
             moveY=moveY+dy;
         }
@@ -71,7 +71,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (x < 25){
+        if (intX<1){
             return false;
         }
 
@@ -81,7 +81,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if ( x > 774){
+        if (intX>29){
             return false;
         }
         return mapBool[intX+1][intY];
@@ -90,7 +90,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (y < 25){
+        if (intY<1){
             return false;
         }
         return mapBool[intX][intY-1];
@@ -99,7 +99,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (y > 774){
+        if (intY>30){
             return false;
         }
         return mapBool[intX][intY+1];

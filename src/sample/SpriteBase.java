@@ -532,6 +532,7 @@ public abstract class SpriteBase {
                             dx = -patrolSpeed;
                             dy = 0;
                         }
+
                     break;
 
                     case 4:
@@ -544,6 +545,31 @@ public abstract class SpriteBase {
                     default:
                     break;
                 }
+
+                //Check patrol collisions
+                if (dx == patrolSpeed){
+                    if (!mapLevel.canMoveRight(x, y)) {
+                        dx = 0;
+                    }
+                }
+                else if (dx == -patrolSpeed){
+                    if (!mapLevel.canMoveLeft(x, y)) {
+                        dx = 0;
+                    }
+                }
+
+                else if (dx == patrolSpeed){
+                    if (!mapLevel.canMoveDown(x, y)) {
+                        dy = 0;
+                    }
+                }
+                else if (dx == -patrolSpeed){
+                    if (!mapLevel.canMoveRight(x, y)) {
+                        dy = 0;
+                    }
+                }
+
+
             }
             //No last seen position, don't move
             else
