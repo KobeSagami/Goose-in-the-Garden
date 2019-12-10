@@ -45,6 +45,8 @@ public abstract class SpriteBase {
     double detectSize = 50;
     double moveToSize = 14;
 
+    double collideSize = 20;
+
     double health;
     double damage;
     double speed = 2;
@@ -271,7 +273,13 @@ public abstract class SpriteBase {
 
     // TODO: per-pixel-collision and map collisions
     public boolean collidesWith(SpriteBase otherSprite) {
-        return (otherSprite.x + otherSprite.w >= x && otherSprite.y + otherSprite.h >= y && otherSprite.x <= x + w && otherSprite.y <= y + h);
+        boolean toReturn = false;
+
+        if (distTo(otherSprite.x, x) < collideSize && distTo(otherSprite.y,y) < collideSize){
+            toReturn = true;
+        }
+
+        return (toReturn);
     }
 
     /**
@@ -549,28 +557,26 @@ public abstract class SpriteBase {
 
                 //Check patrol collisions
                 if (dx == patrolSpeed){
-                    if (!mapLevel.canMoveRight(x, y)) {
+                    if (x > 795) {
                         dx = 0;
                     }
                 }
                 else if (dx == -patrolSpeed){
-                    if (!mapLevel.canMoveLeft(x, y)) {
+                    if (x < 5) {
                         dx = 0;
                     }
                 }
 
-                else if (dx == patrolSpeed){
-                    if (!mapLevel.canMoveDown(x, y)) {
+                else if (dy == patrolSpeed){
+                    if ( y > 795) {
                         dy = 0;
                     }
                 }
-                else if (dx == -patrolSpeed){
-                    if (!mapLevel.canMoveRight(x, y)) {
+                else if (dy == -patrolSpeed){
+                    if ( y < 5) {
                         dy = 0;
                     }
                 }
-
-
             }
             //No last seen position, don't move
             else
@@ -639,6 +645,29 @@ public abstract class SpriteBase {
                         dy = dy + .1;
                     }
                 break;
+            }
+        }
+
+        //Check patrol collisions
+        if (dx == patrolSpeed){
+            if (x > 795) {
+                dx = 0;
+            }
+        }
+        else if (dx == -patrolSpeed){
+            if (x < 5) {
+                dx = 0;
+            }
+        }
+
+        else if (dy == patrolSpeed){
+            if ( y > 795) {
+                dy = 0;
+            }
+        }
+        else if (dy == -patrolSpeed){
+            if ( y < 5) {
+                dy = 0;
             }
         }
     }
