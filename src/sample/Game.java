@@ -32,6 +32,7 @@ public class Game extends Application {
 
     Random rnd = new Random();
 
+    AnimationTimer gameLoop;
 
     Pane playfieldLayer;
     Pane scoreLayer;
@@ -85,7 +86,7 @@ public class Game extends Application {
         spawnEnemies(75, 700,"clay");
         spawnEnemies(725, 75,"clay");
         spawnEnemies(725, 700,"clay");
-        AnimationTimer gameLoop = new AnimationTimer() {
+        gameLoop = new AnimationTimer() {
 
             @Override
             public void handle(long now) {
@@ -404,7 +405,10 @@ public class Game extends Application {
 
     private void updateScore() {
         if( collision) {
-            collisionText.setText("Collision");
+            collisionText.setText("\tGame Over\n(esc for main menu)");
+            collisionText.setX(-170);
+            collisionText.setY(-30);
+            gameLoop.stop();
         } else {
             collisionText.setText("");
         }
