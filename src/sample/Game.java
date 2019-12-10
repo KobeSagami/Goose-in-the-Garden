@@ -46,6 +46,8 @@ public class Game extends Application {
     List<Enemy> enemies = new ArrayList<>();
 
     Text collisionText = new Text();
+    Text scoreText = new Text();
+    int score;
     boolean collision = false;
 
     Scene scene;
@@ -67,9 +69,16 @@ public class Game extends Application {
         playfieldLayer = new Pane();
         scoreLayer = new Pane();
 
+        score = 0;
+        scoreText.setText("Score: " + score);
+        scoreText.setFont( Font.font( null, FontWeight.BOLD, 32));
+        scoreText.setStroke(Color.BLACK);
+        scoreText.relocate(0, 10);
+
         root.getChildren().add(backgroundView);
         root.getChildren().add(playfieldLayer);
         root.getChildren().add(scoreLayer);
+        root.getChildren().add(scoreText);
 
         scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
 
@@ -116,6 +125,8 @@ public class Game extends Application {
                 removeSprites( enemies);
 
                 // update score, health, etc
+                score++;
+                scoreText.setText("Score: " + score / 25);
                 updateScore();
             }
 
@@ -193,6 +204,7 @@ public class Game extends Application {
             }
             root.getChildren().add(imageViews.get(i));
         }
+
 
         //Selected Menu Option Animation
         ScaleTransition selectedTransition = new ScaleTransition();
@@ -334,7 +346,6 @@ public class Game extends Application {
         collisionText.setText("");
 
         collisionText.setBoundsType(TextBoundsType.VISUAL);
-
 
     }
     private void createPlayer() {

@@ -170,6 +170,7 @@ public abstract class SpriteBase {
 
     public void move() {
         frame = ++frame % 60;
+
         if (!canMove)
             return;
 
