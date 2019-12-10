@@ -330,7 +330,7 @@ public class Game extends Application {
         collisionText.setText("Collision");
         double x = (Settings.SCENE_WIDTH - collisionText.getBoundsInLocal().getWidth()) / 2;
         double y = (Settings.SCENE_HEIGHT - collisionText.getBoundsInLocal().getHeight()) / 2;
-        collisionText.relocate(x, y);
+        collisionText.relocate(x - 175, y - 10);
         collisionText.setText("");
 
         collisionText.setBoundsType(TextBoundsType.VISUAL);
@@ -406,8 +406,6 @@ public class Game extends Application {
     private void updateScore() {
         if( collision) {
             collisionText.setText("\tGame Over\n(esc for main menu)");
-            collisionText.setX(-170);
-            collisionText.setY(-30);
             gameLoop.stop();
         } else {
             collisionText.setText("");
