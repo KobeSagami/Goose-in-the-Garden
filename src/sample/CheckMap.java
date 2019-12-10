@@ -67,10 +67,11 @@ public class CheckMap {
     }
 
     public boolean canMoveLeft(double x, double y){
+
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intX<1){
+        if (x < 25){
             return false;
         }
 
@@ -80,7 +81,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intX>29){
+        if ( x > 774){
             return false;
         }
         return mapBool[intX+1][intY];
@@ -89,7 +90,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intY<1){
+        if (y < 25){
             return false;
         }
         return mapBool[intX][intY-1];
@@ -98,7 +99,7 @@ public class CheckMap {
         Integer intX = (int)x/25;
         Integer intY = (int)y/25;
 
-        if (intY>30){
+        if (y > 774){
             return false;
         }
         return mapBool[intX][intY+1];
