@@ -95,6 +95,8 @@ public class Game extends Application {
         spawnEnemies(75, 700,"clay");
         spawnEnemies(725, 75,"clay");
         spawnEnemies(725, 700,"clay");
+        spawnEnemies(500, 450,"clay");
+        spawnEnemies(250, 450,"clay");
         gameLoop = new AnimationTimer() {
 
             @Override
