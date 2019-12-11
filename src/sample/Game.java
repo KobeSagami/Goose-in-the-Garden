@@ -317,6 +317,11 @@ public class Game extends Application {
                             enemies.removeAll(enemies);
                             startGame(primaryStage);
                         }
+                        else if (select[0] == 2){
+                            gameLoop.stop();
+                            enemies.removeAll(enemies);
+                            instructions(primaryStage);
+                        }
                 }
             }
         });
@@ -326,7 +331,58 @@ public class Game extends Application {
         primaryStage.show();
     }
 
-    private void loadGame() {
+    public void instructions(Stage primaryStage) {
+        Image background = new Image("sample/Images/menu/blankmenu.jpg");
+        Image title = new Image("sample/Images/menu/title.png");
+        Image start = new Image("sample/Images/menu/start.png");
+        Image instructions = new Image("sample/Images/menu/instruct.png");
+
+        //Setting image views
+        ImageView backgroundView = new ImageView(background);
+        ImageView instructionsView = new ImageView(instructions);
+
+        instructionsView.setX(400);
+        instructionsView.setY(400);
+
+        ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
+        imageViews.add(backgroundView);
+        imageViews.add(instructionsView);
+
+        Group root = new Group();
+        ImageTools.scaleImage(instructionsView,(double)400,(double)400);
+        //scale images, fix positions, and add to group
+        for(int i=0;i<imageViews.size();i++){
+            if (imageViews.get(i) != backgroundView){
+                ImageTools.centerImage(imageViews.get(i));
+            }
+            root.getChildren().add(imageViews.get(i));
+        }
+
+
+        scene = new Scene( root, Settings.SCENE_WIDTH, Settings.SCENE_HEIGHT);
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
+
+            @Override
+            public void handle(KeyEvent event){
+                switch(event.getCode()){
+
+                    case ESCAPE:
+                        gameLoop.stop();
+                        enemies.removeAll(enemies);
+                        start(primaryStage);
+
+                }
+            }
+        });
+
+        gameLoop.start();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+
+        private void loadGame() {
         playerImage = new Image( getClass().getResource("Images/chickens/whiteChickenDown1.png").toExternalForm());
         enemyImage = new Image( getClass().getResource("enemy.png").toExternalForm());
     }
